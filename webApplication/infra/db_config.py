@@ -2,7 +2,7 @@ import mysql.connector
 
 
 def con():
-    return mysql.connector.connect(host="localhost", user="user_app", passwd="pass_user_app", db="bradooTest_db")
+    return mysql.connector.connect(host="localhost", user="user_app", passwd="pass_user_app", db="fast_lunch_db")
 
 
 sql_create_table_vendor = "CREATE TABLE IF NOT EXISTS vendor (id INT AUTO_INCREMENT NOT NULL,vendorName varchar(50) NOT NULL, cnpj varchar(18) NOT NULL UNIQUE, city char(50), PRIMARY KEY (id));"
@@ -28,8 +28,8 @@ def init():
     con = mysql.connector.connect(
         host="localhost", user="user_app", passwd="pass_user_app")
     cursor = con.cursor()
-    cursor.execute("CREATE DATABASE IF NOT EXISTS bradooTest_db")
-    cursor.execute("USE bradooTest_db")
+    cursor.execute("CREATE DATABASE IF NOT EXISTS fast_lunch_db")
+    cursor.execute("USE fast_lunch_db")
     createTable(cursor, sql_create_table_vendor)
     createTable(cursor, sql_create_table_product)
 
