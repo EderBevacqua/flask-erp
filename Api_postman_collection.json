@@ -1,0 +1,408 @@
+{
+	"info": {
+		"_postman_id": "db521fec-e0c5-454c-bbab-36a937bc95a5",
+		"name": "bradooTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Operations Vendors",
+			"item": [
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/vendors/1",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"vendors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"vendorName\": \"Steaker house\",\r\n\"cnpj\": \"80.832.797/0001-22\",\r\n\"city\": \"SP\",\r\n\"products\": [{\r\n\"productName\": \"XXX\",\r\n\"productCode\": 15,\r\n\"price\": 2.2\r\n}\r\n]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/vendors/",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"vendors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/vendors/",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"vendors",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Del",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/vendors/2",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"vendors",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Any Field",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/vendors/findAnyField?city=Chicago",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"vendors",
+								"findAnyField"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "Chicago"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/vendors/14?vendorName=Steaker House&cnpj=91.524.979/0001-52&city=Chicago",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"vendors",
+								"14"
+							],
+							"query": [
+								{
+									"key": "vendorName",
+									"value": "Steaker House"
+								},
+								{
+									"key": "cnpj",
+									"value": "91.524.979/0001-52"
+								},
+								{
+									"key": "city",
+									"value": "Chicago"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2dd4392c-7de5-4a8c-a6cb-8c514f4cb83d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9794191-697d-49ae-bee3-61d0baae7d75",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Operations Products",
+			"item": [
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/products/1",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/products/",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"productName\": \"Martini\",\r\n\"productCode\": 15,\r\n\"price\": 22.70\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/products/7",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/products/18?productName=Martini&productCode=44&price=45.50",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"18"
+							],
+							"query": [
+								{
+									"key": "productName",
+									"value": "Martini"
+								},
+								{
+									"key": "productCode",
+									"value": "44"
+								},
+								{
+									"key": "price",
+									"value": "45.50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Del",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/products/18",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"18"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find Any Field",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://ederbevacqua.pythonanywhere.com/api/products/findAnyField?vendorID=1",
+							"protocol": "http",
+							"host": [
+								"ederbevacqua",
+								"pythonanywhere",
+								"com"
+							],
+							"path": [
+								"api",
+								"products",
+								"findAnyField"
+							],
+							"query": [
+								{
+									"key": "vendorID",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,228 @@
+{% extends 'template_base.html' %} {% block body %}
+<div id="page-wrapper">
+    <div class="container">
+        <h3>Vendors</h3>
+
+        <!-- buntons addRemove -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <a id="addVendor" class="btn btn-success btn-block" data-toggle="modal" href=""
+                            data-target="#modalNewVendor">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a class="btn btn-danger btn-block" id="rmVendor"
+                            href="javascript:$('#formRmMultiVendor').submit();"
+                            onclick="return confirm('Do you really want to remove this vendors?')">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                            Remove
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end buntons addRemove -->
+
+        <!-- find -->
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="/vendors/find" method="POST">
+                    <div class="form-row">
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1" for="id"><strong>Id</strong></label>
+                                <input type="number" id="id" name="id" class="form-control py-3" autocomplete="on"
+                                    placeholder="Id" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1"
+                                    for="vendorName"><strong>Name</strong></label>
+                                <input type="text" id="vendorName" name="vendorName" class="form-control py-3"
+                                    autocomplete="on" placeholder="Name" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1" for="cnpj"><strong>Cnpj</strong></label>
+                                <input type="text" id="cnpj" name="cnpj" class="form-control py-3"
+                                    pattern="\d{2,3}.\d{3}.\d{3}/\d{4}-\d{2}" autocomplete="on"
+                                    placeholder="00.000.000/0000-00" maxlength="18" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1" for="city"><strong>City</strong></label>
+                                <input type="text" id="city" name="city" class="form-control py-3" autocomplete="on"
+                                    placeholder="City" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <button class="btn btn-primary btn-block" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end find -->
+
+        <!-- messages -->
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div id="messages" class=flashes>
+            {% for message in messages %}
+            <div class="modal-content">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+        <!-- end messages -->
+
+        <!-- Table -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="table-responsive-sm">
+                    <div class="table-responsive text-nowrap">
+                        {% if vendors != None and vendors != [] %}
+                        <form id="formRmMultiVendor" method="POST" action="\vendors\multiremove">
+                            <table class="table text-center table-sm table-hover table-striped">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th><a id="btnSelectAll" href="#">SelectAll</a></th>
+                                        <th>Id</th>
+                                        <th>VendorName</th>
+                                        <th>CNPJ</th>
+                                        <th>City</th>
+                                        <th class="actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for vendor in vendors %}
+                                    <tr>
+                                        <td id="selectBox"><input type="checkbox" name="checkRemove"
+                                                value="{{ vendor.id }}">
+                                        </td>
+                                        <td>{{ vendor.id }}</td>
+                                        <td>{{ vendor.vendorName }}</td>
+                                        <td>{{ vendor.cnpj }}</td>
+                                        <td>{{ vendor.city }}</td>
+                                        <td class="actions">
+                                            <a href="#" title="Edit" data-toggle="modal"
+                                                data-target="#editVendor{{ vendor.id }}"><span
+                                                    class="glyphicon">&#x270f;</span></a>
+                                            <a href="/vendors/remove/{{ vendor.id }}" title="Remove"
+                                                onclick="return confirm('Do you really want to remove this vendor?')"><span
+                                                    class="glyphicon">&#x2718;</span></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Table -->
+
+        <!-- modal NewVendor -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="modal fade" id="modalNewVendor" role="dialog">
+                    <div style="background-color:white; padding:4px;" class="rounded modal-dialog modal-lg">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>New Vendor</h3>
+                        <div class="text-nowrap">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <form class="was-validated" action="/vendors/register" method="POST">
+                                        <div class="form-group">
+                                            <label for="vendorName">Name:*</label>
+                                            <input class="form-control" type="text" id="vendorName" name="vendorName"
+                                                placeholder="Name" min="5" max="50" autocomplete="on" required>
+                                            <span class="validity"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cnpj">CNPJ:*</label>
+                                            <input type="text" id="cnpj" name="cnpj" class="form-control"
+                                                autocomplete="on" pattern="\d{2,3}.\d{3}.\d{3}/\d{4}-\d{2}"
+                                                placeholder="00.000.000/0000-00" maxlength="18"
+                                                title="Accepted format: 00.000.000/000-00" required />
+                                            <span class="validity"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">City:</label>
+                                            <input class="form-control" type="text" id="city" name="city"
+                                                placeholder="City" autocomplete="on">
+                                        </div>
+                                        <button class="btn btn-success mr-2" type="submit">Save</button> <button
+                                            type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <h10 class="center">*Required fields</h10>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal NewVendor -->
+
+        <!-- modal EditVendor -->
+        <div class="row">
+            <div class="col-lg-12">
+                {% for vendor in vendors %}
+                <div class="modal fade" id="editVendor{{ vendor.id }}" role="dialog">
+                    <div style="background-color:white; padding:4px;" class="rounded modal-dialog modal-lg">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>Edit Vendor</h3>
+                        <div class="text-nowrap">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    {% if vendors != None and vendors != Null %}
+                                    <form class="was-validated" action="\vendors\alter" method="POST">
+                                        <input type="hidden" name="id" value="{{ vendor.id|safe }}">
+                                        <div class="form-group">
+                                            <label for="vendorName">Name:*</label>
+                                            <input class="form-control" type="text" id="vendorName" name="vendorName"
+                                                placeholder="Name" max="50" autocomplete="on"
+                                                value="{{ vendor.vendorName }}" required>
+                                            <span class="validity"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cnpj">CNPJ:*</label>
+                                            <input type="text" id="cnpj" name="cnpj" class="form-control"
+                                                pattern="\d{2,3}.\d{3}.\d{3}/\d{4}-\d{2}"
+                                                title="Accepted format: 00.000.000/000-00" autocomplete="on"
+                                                value="{{ vendor.cnpj }}" placeholder="00.000.000/0000-00"
+                                                maxlength="18" required />
+                                            <span class="validity"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">City:</label>
+                                            <input class="form-control" type="text" id="city" name="city"
+                                                placeholder="City" autocomplete="on" value="{{ vendor.city }}">
+                                        </div>
+                                        <button class="btn btn-success mr-2" type="submit">Save</button><button
+                                            type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <h10 class="center">*Required fields</h10>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %} 
+            </div>
+        </div>
+        <!-- end modal EditVendor -->
+    </div>
+</div>
+
+{% endblock body %}

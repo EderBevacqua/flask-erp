@@ -1,0 +1,62 @@
+{% extends 'template_base.html' %} {% block body %}
+<div id="page-wrapper">
+    <div class="container">
+        <h3>Vendors</h3>
+        {% if vendors != None and vendors != [] %}
+        {% for vendor in vendors %}
+        <div id="divVendor" class="table-responsive text-nowrap vendors" data-toggle="collapse"
+            data-target="#divProducts{{vendor.id}}">
+            <table class="table text-center table-sm table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>VendorName</th>
+                        <th>CNPJ</th>
+                        <th>City</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ vendor.id }}</td>
+                        <td>{{ vendor.vendorName }}</td>
+                        <td>{{ vendor.cnpj }}</td>
+                        <td>{{ vendor.city }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="divProducts{{vendor.id}}" class="table-responsive text-nowrap products collapse">
+                {% if vendor.products != [] %}
+                <h4>Products</h4>
+                <table class="table text-center table-sm table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Id</th>
+                            <th>vendorID</th>
+                            <th>ProductName</th>
+                            <th>ProductCode</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    {% for p in vendor.products %}
+                    <tbody>
+                        <tr>
+                            <td>{{ p.id }}</td>
+                            <td>{{ p.vendorID }}</td>
+                            <td>{{ p.productName }}</td>
+                            <td>{{ p.productCode }}</td>
+                            <td>{{ p.price }}</td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+                {% else %}
+                <h4>No Product</h4>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+{% endblock body %}

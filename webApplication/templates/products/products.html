@@ -1,0 +1,240 @@
+{% extends 'template_base.html' %} {% block body %}
+<div id="page-wrapper">
+    <div class="container">
+        <h3>Products</h3>
+
+        <!-- buntons addRemove -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <a id="addProduct" class="btn btn-success btn-block" href="" data-toggle="modal"
+                            data-target="#modalNewProduct">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            New
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <a class="btn btn-danger btn-block" id="rmProduct"
+                            href="javascript:$('#formRmMultiProduct').submit();"
+                            onclick="return confirm('Do you really want to remove this products?')">
+                            <i class="fa fa-minus" aria-hidden="true"></i>
+                            Remove
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end buntons addRemove -->
+
+        <!-- find -->
+        <div class="row">
+            <div class="col-lg-12">
+                <form action="/products/find" method="POST">
+                    <div class="form-row">
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1" for="id"><strong>Id</strong></label>
+                                <input type="number" id="id" name="id" class="form-control py-3" pattern="[0-9]+$"
+                                    autocomplete="on" placeholder="Id" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1" for="id"><strong>VendorID</strong></label>
+                                <input type="number" id="vendorID" name="vendorID" class="form-control py-3"
+                                    pattern="[0-9]+$" autocomplete="on" placeholder="VendorID" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1"
+                                    for="productName"><strong>Name</strong></label>
+                                <input type="text" id="productName" name="productName" class="form-control py-3"
+                                    autocomplete="on" placeholder="Name" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1"
+                                    for="productCode"><strong>Code</strong></label>
+                                <input type="number" id="productCode" name="productCode" pattern="[0-9]+$"
+                                    class="form-control py-3" autocomplete="on" placeholder="Code" />
+                            </div>
+                        </div>
+                        <div class="col-sm">
+                            <div class="form-group"><label class="small mb-1" for="city"><strong>Price</strong></label>
+                                <input type="number" id="price" name="price" class="form-control py-3" autocomplete="on"
+                                    placeholder="Price" step="any" />
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <button class="btn btn-primary btn-block" type="submit"><i
+                                    class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- end find -->
+
+        <!-- messages -->
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div id="messages" class=flashes>
+            {% for message in messages %}
+            <div class="modal-content">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+        <!-- end messages -->
+
+        <!-- Table -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="table-responsive-sm">
+                    <div class="table-responsive text-nowrap">
+                        {% if products != None and products != [] %}
+                        <table class="table text-center table-sm table-hover table-striped">
+                            <form id="formRmMultiProduct" method="POST" action="\products\multiremove">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th><a id="btnSelectAll" href="#">SelectAll</a></th>
+                                        <th>Id</th>
+                                        <th>VendorID</th>
+                                        <th>ProductName</th>
+                                        <th>ProductCode</th>
+                                        <th>Price</th>
+                                        <th class="actions">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                    <tr>
+                                        <td id="selectBox"><input type="checkbox" name="checkRemove"
+                                                value="{{ product.id }}">
+                                        </td>
+                                        <td>{{ product.id }}</td>
+                                        <td>{{ product.vendorID }}</td>
+                                        <td>{{ product.productName }}</td>
+                                        <td>{{ product.productCode }}</td>
+                                        <td>{{ product.price }}</td>
+                                        <td class="actions">
+                                            <a href="#" title="Edit" data-toggle="modal"
+                                                data-target="#editProduct{{ product.id }}"><span
+                                                    class="glyphicon">&#x270f;</span></a>
+                                            <a href="/products/remove/{{ product.id }}" title="Remove"
+                                                onclick="return confirm('Do you really want to remove this product?')"><span
+                                                    class="glyphicon">&#x2718;</span></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </form>
+                        </table>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end Table -->
+
+        <!-- modal NewProduct -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="modal fade" id="modalNewProduct" role="dialog">
+                    <div style="background-color:white; padding:4px;" class="rounded modal-dialog modal-lg">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>New Product</h3>
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <form class="was-validated" action="/products/register" method="POST">
+                                    <div class="form-group">
+                                        <label for="selectVendor">Select the vendor:*</label>
+                                        <select name='vendorID' required>
+                                            <option value="" selected='selected'></option>
+                                            {% for vendor in vendorSelec %}
+                                            <option value="{{ vendor.id }}">Name: {{ vendor.vendorName }} - Cnpj:
+                                                {{ vendor.cnpj }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <span class="validity"></span>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="productName">Name:*</label>
+                                        <input type="text" class="form-control" name="productName" placeholder="Name"
+                                            max="50" autocomplete="on" required>
+                                        <span class="validity"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="productCode">Code:*</label>
+                                        <input type="number" class="form-control" name="productCode" pattern="[0-9]"
+                                            autocomplete="on" placeholder="Code" required />
+                                        <span class="validity"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="price">Price:</label>
+                                        <input type="number" class="form-control" name="price" placeholder="Price"
+                                            step="any" autocomplete="on">
+                                    </div>
+
+                                    <button class="btn btn-success mr-2" type="submit">Save</button><button
+                                        type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                        <h10 class="center">*Required fields</h10>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal NewProduct -->
+
+        <!-- modal EditProduct -->
+        <div class="row">
+            <div class="col-lg-12">
+                {% for product in products %}
+                <div class="modal fade" id="editProduct{{ product.id }}" role="dialog">
+                    <div style="background-color:white; padding:4px;" class="rounded modal-dialog modal-lg">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>Edit Product</h3>
+                        <div class="text-nowrap">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <form class="was-validated" action="\products\alter" method="POST">
+                                        <input type="hidden" name="id" value="{{ product.id|safe }}">
+                                        <div class="form-group">
+                                            <label for="productName">Name:*</label>
+                                            <input type="text" class="form-control" name="productName"
+                                                placeholder="Name" max="50" autocomplete="on"
+                                                value="{{ product.productName }}" required>
+                                            <span class="validity"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="productCode">Code:*</label>
+                                            <input type="number" class="form-control" name="productCode"
+                                                placeholder="Code" autocomplete="on" pattern="[0-9]"
+                                                value="{{ product.productCode }}" required />
+                                            <span class="validity"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="price">Price:</label>
+                                            <input type="number" class="form-control" name="price" placeholder="Price"
+                                                autocomplete="on" step="any" value="{{ product.price }}">
+                                        </div>
+                                        <button type="submit" class="btn btn-success mr-2">Save</button><button
+                                            type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <h10 class="center">*Required fields</h10>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <!-- end modal EditProduct -->
+    </div>
+</div>
+{% endblock body %}
