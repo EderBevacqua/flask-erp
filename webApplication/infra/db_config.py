@@ -2,7 +2,11 @@ import mysql.connector
 
 
 def con():
+<<<<<<< HEAD
     return mysql.connector.connect(host="mysqlsrv", user="user_app", passwd="pass_user_app", db="fast_lunch_db")
+=======
+    return mysql.connector.connect(host="localhost", user="user_app", passwd="pass_user_app", db="fast_lunch_db")
+>>>>>>> af7cb2263552e73f8e0ccfb5a7887d6e5726c332
 
 
 sql_create_table_vendor = "CREATE TABLE IF NOT EXISTS vendor (id INT AUTO_INCREMENT NOT NULL,vendorName varchar(50) NOT NULL, cnpj varchar(18) NOT NULL UNIQUE, city char(50), PRIMARY KEY (id));"
